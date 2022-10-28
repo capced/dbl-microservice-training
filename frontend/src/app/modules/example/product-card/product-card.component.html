@@ -1,0 +1,19 @@
+<mat-card *ngIf="product" class="example-card mat-elevation-z8">
+  <mat-card-header>
+    <div *ngIf="product.type === 'LIVRE'" mat-card-avatar class="example-header-image-book"></div>
+    <div *ngIf="product.type === 'AUTRE'" mat-card-avatar class="example-header-image-other"></div>
+    <div *ngIf="product.type === 'PREMIERE_NECESSITE'" mat-card-avatar class="example-header-image-pn"></div>
+    <mat-card-title>{{ product.name }}</mat-card-title>
+    <mat-card-subtitle>{{ product.withoutTaxesPrice | currency: 'EUR' }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>This product is {{ product.imported ? 'imported' : 'local' }}.</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button color="accent" mat-flat-button (click)="addProductToCart()">
+      ADD TO CART
+      <span class="button-icon-spacer"></span>
+      <mat-icon class="material-symbols-outlined" aria-hidden="true">add</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,44 @@
+app:
+  endpoint:
+    timeout: 10000
+server:
+  port: 8090
+  servlet:
+    contextPath: /
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: shoppingcart-api
+  output.ansi.enabled: ALWAYS
+  liquibase:
+      enabled: true
+      changeLog: "classpath:changelog/master.xml"
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+    hibernate:
+        ddl-auto: none
+  h2:
+    console:
+      enabled: true
+  data:
+    rest:
+      enable-enum-translation: true
+      defaultMediaType: application/json
+  jackson:
+    mapper:
+      infer-property-mutators: false
+    serialization:
+      INDENT_OUTPUT: true
+logging:
+  level:
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG

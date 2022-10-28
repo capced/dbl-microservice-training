@@ -1,0 +1,51 @@
+$main-color: #6394f8;
+$light-text: #abb0be;
+
+.shopping-cart-items {
+  padding-inline-start: unset;
+}
+.product-img {
+  float: left;
+  margin-right: 12px;
+  width: 70px;
+  height: 70px;
+}
+
+.example-book {
+  background-image: url('https://static.vecteezy.com/system/resources/previews/000/268/026/non_2x/vector-stack-of-books-and-pics-albums.jpg');
+  background-size: cover;
+}
+
+.example-other {
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTAjsy1A3B9-dVhroHHe-HGu0DdpjUki4CMRg&usqp=CAU');
+  background-size: cover;
+}
+
+.example-pn {
+  background-image: url('https://m.bettybossi.ch/static/rezepte/x/bb_bbza040115_0008c_x.jpg');
+  background-size: cover;
+}
+
+.item-name {
+  display: block;
+  font-size: 16px;
+}
+
+.item-price {
+  color: $main-color;
+  margin-right: 8px;
+}
+
+.item-quantity {
+  color: $light-text;
+}
+.clearfix {
+  height: 80px;
+  white-space: nowrap;
+  display: block;
+}
+
+.quantity-buttons {
+  display: flex;
+  flex-direction: row-reverse;
+}

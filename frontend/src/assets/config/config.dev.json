@@ -1,0 +1,16 @@
+{
+  "env": {
+    "name": "DEV"
+  },
+  "loggerConfig": {
+    "// levels:": "TRACE=0, DEBUG=1, INFO=2, LOG=3, WARN=4, ERROR=5, FATAL=6, OFF=7",
+    "level": 1,
+    "serverLogLevel": 5,
+    "// serverLoggingUrl": "/api/logs",
+    "// disableConsoleLogging": true
+  },
+  "features": {
+    "all": true
+  },
+  "apiUrl": "mock-api"
+}

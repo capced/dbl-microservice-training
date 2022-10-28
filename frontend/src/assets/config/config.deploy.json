@@ -1,0 +1,19 @@
+{
+  "env": {
+    "name": "#{envName}"
+  },
+  "loggerConfig": {
+    "// levels:": "TRACE=0, DEBUG=1, INFO=2, LOG=3, WARN=4, ERROR=5, FATAL=6, OFF=7",
+    "level": 1,
+    "serverLogLevel": 5,
+    "// serverLoggingUrl": "/api/logs",
+    "disableConsoleLogging": true
+  },
+  "features": {
+    "big-header": true,
+    "side-menu": true,
+    "content-section": true,
+    "github-footer": true,
+    "dev-feature": false
+  }
+}

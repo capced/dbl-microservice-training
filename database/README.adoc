@@ -1,0 +1,22 @@
+Shopping Cart dbupdate
+-------------------
+
+Ce composant permet de gérer les montées de version de la base de données PostgreSQL DATALAB.
+Les changements sont exécutés grâce à la librairie Liquibase.
+
+Exécution local
+^^^^^^^^^^^^^^^
+mvn clean compile liquibase:update
+
+Ne pas aller au delà du goal "compile" sinon liquibase trouvera deux occurences du changelog,
+une dans les ressources et une dans le classpath
+
+Organisation des sources
+^^^^^^^^^^^^^^^^^^^^^^^^
+src
+  - main
+      - resources
+		  - master.xml : fichier maître lancer par liquibase
+	      - changelogs : contient autant de répertoire que de version majeure de BDD
+		     - 1.x     : version majeure 1.X
+		  - liquibase.properties: fichier de configuration de la base

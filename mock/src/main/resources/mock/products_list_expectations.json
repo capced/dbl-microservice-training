@@ -1,0 +1,20 @@
+[{
+    "httpRequest":{
+        "path":"/shoppingcart/products",
+        "method": "GET"
+    },
+    "httpResponse": {
+        "filePath": "product/product_list_ok.json",
+        "statusCode": 200
+    }
+},
+  {
+    "httpRequest":{
+      "path":"/shoppingcart/products/\\d+",
+      "method": "GET"
+    },
+    "httpResponse": {
+      "callbackClass": "com.capgemini.fs.dbl.digitalacademy.shoppingcart.DynamicProductResponse",
+      "statusCode": 200
+    }
+  }]

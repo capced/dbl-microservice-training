@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+		<groupId>com.capgemini.fs.dbl.digitalacademy.shoppingcart</groupId>
+		<artifactId>dbl-microservice-training</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>dbl-microservice-mock</artifactId>
+	<packaging>jar</packaging>
+	<name>DBL Shopping cart Mock</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sourceVersion>17</sourceVersion>
+        <targetVersion>17</targetVersion>
+        <mockserver-java-client.version>1.0.2-SNAPSHOT</mockserver-java-client.version>
+
+        <mockserver.host>127.0.0.1</mockserver.host>
+        <mockserver.port>1080</mockserver.port>
+        <mockserver.context>mockserver</mockserver.context>
+        <mockserver.reset-enabled>true</mockserver.reset-enabled>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.capgemini.fs.dbl.shared.mock</groupId>
+			<artifactId>mockserver-java-client</artifactId>
+			<version>${mockserver-java-client.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220320</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <compilerVersion>${sourceVersion}</compilerVersion>
+                    <source>${sourceVersion}</source>
+                    <target>${targetVersion}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includeProjectDependencies>true</includeProjectDependencies>
+                    <includePluginDependencies>true</includePluginDependencies>
+                    <mainClass>fr.caa.common.test.mock.MockServerCustomInitializer</mainClass>
+                    <arguments>
+                        <argument>${mockserver.host}</argument>
+                        <argument>${mockserver.port}</argument>
+                        <argument>${mockserver.context}</argument>
+                        <argument>${mockserver.reset-enabled}</argument>
+                    </arguments>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>fr.caa.common.test.mock</groupId>
+                        <artifactId>mockserver-java-client</artifactId>
+                        <version>${mockserver-java-client.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.mock-server</groupId>
+                <artifactId>mockserver-maven-plugin</artifactId>
+                <version>5.13.2</version>
+                <configuration>
+                    <logLevel>INFO</logLevel>
+                    <serverPort>1080</serverPort>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.capgemini.fs.dbl.digitalacademy.shoppingcart</groupId>
+                        <artifactId>dbl-microservice-mock</artifactId>
+                        <version>1.0.0-SNAPSHOT</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>commons-lang3</artifactId>
+                        <version>3.12.0</version>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>fr.caa.common.test.mock</groupId>
+                        <artifactId>mockserver-java-client</artifactId>
+                        <version>${mockserver-java-client.version}</version>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>org.json</groupId>
+                        <artifactId>json</artifactId>
+                        <version>20220320</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+</project>

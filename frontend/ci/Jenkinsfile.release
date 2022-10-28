@@ -1,0 +1,220 @@
+/* groovylint-disable NoDef, UnusedVariable */
+@Library(['cicd-shared-lib'])_
+
+import com.cloudbees.groovy.cps.NonCPS
+import com.capgemini.fs.jenkins.plugins.bundle.BundleFactory
+import com.capgemini.fs.jenkins.plugins.bundle.Bundle
+import com.capgemini.fs.jenkins.plugins.util.*
+import com.capgemini.fs.jenkins.plugins.notification.*
+import com.capgemini.fs.jenkins.plugins.notification.library.*
+import com.capgemini.fs.jenkins.plugins.notification.simple.*
+
+Bundle releaseBundle
+def executables = [:]
+def configurationProjet = [:]
+def npmConfiguration = [:]
+def updatedPackage = [:]
+String dockerImageName
+def commitHash
+
+pipeline {
+    agent none
+
+    environment {
+        CONFIG_FILE = 'ci/configuration.json'
+        NPM_CONFIG = 'package.json'
+        GIT_CREDENTIAL_ID = 'service-account-shareit'
+        AWS_PROFILE = 'dbl-account'
+        AWS_ACCESS_KEY_ID = credentials('dbl-aws-secret-key-id') 
+        AWS_SECRET_ACCESS_KEY_ID = credentials('dbl-aws-secret-access-key')
+    }
+
+    tools {
+        nodejs 'Node 15'
+    }
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        skipDefaultCheckout()
+    }
+
+    stages {
+        stage('Prepare release') {
+            agent {
+                label 'debian'
+            }
+            steps {
+                script {
+
+                    checkout scm
+
+                    try {
+                        configurationProjet = readJSON file: env.CONFIG_FILE
+                        npmConfiguration = readJSON file: env.NPM_CONFIG
+
+                        commitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+                    } catch (exception) {
+                        echo 'Une erreur est survenue à la lecture des fichiers de configuration !' + exception.getMessage()
+                    }
+                }
+            }
+        }
+
+        stage('NPM Install') {
+            agent {
+                label 'debian'
+            }
+            steps {
+                script {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Static code analysis') {
+            agent {
+                label 'debian'
+            }
+            steps {
+                script {
+                    npm.run {
+                        script = 'lint'
+                    }
+                }
+            }
+        }
+        stage('Unit tests') {
+            agent {
+                label 'debian'
+            }
+            steps {
+                script {
+                    sh 'npm install chromium'
+                    sh 'sudo apt-get install -y libgbm-dev'
+                    env.CHROME_BIN = "node_modules/chromium/lib/chromium/chrome-linux/chrome"
+                    npm.run {
+                        script = 'test:headless'
+                    }
+                }
+            }
+        }
+        stage('Build') {
+            agent {
+                label 'debian'
+            }
+            steps {
+                script {
+                    if(env.BRANCH_NAME == 'master'){
+                        npm.run {
+                            script = 'build:deploy'
+                        }
+                    }
+                    else{
+                        npm.run {
+                            script = 'build'
+                        }
+                    }
+                    stash includes: 'dist/**/*', name: 'builtSources'
+                    stash includes: 'Dockerfile', name: 'Dockerfile'
+                    stash includes: 'nginx.conf', name: 'nginxConf'
+                }
+            }
+        }
+        stage('provision env:dev') {
+            when {
+                expression {
+                    return  env.BRANCH_NAME == 'develop'
+                }
+            }
+            steps {
+                script {
+                    build job: 'public/dbl-angular-provisioning-sample', parameters: [
+                    string(name: 'COMMAND', value: 'apply'),
+                    string(name: 'WORKSPACE', value: 'staging'),
+                    ]
+                    
+                }
+            }
+        }
+        stage('Deploy:dev') {
+            when {
+                expression {
+                    return  env.BRANCH_NAME == 'develop'
+                }
+            }
+            agent {
+                label 'fsfr001'
+            }
+            steps {
+                script {
+                    cleanWs()
+                    unstash 'builtSources'
+                    unstash 'Dockerfile'
+                    unstash 'nginxConf'
+                    String awskey = env.AWS_ACCESS_KEY_ID;
+                    String awssecretkey = env.AWS_SECRET_ACCESS_KEY_ID;
+                        dockerCmd.run {
+                			name = "awscli-s3"
+                			imageName = "amazon/aws-cli"
+                			envVars =  ["AWS_ACCESS_KEY_ID=${awskey}", "AWS_SECRET_ACCESS_KEY=${awssecretkey}", "AWS_DEFAULT_REGION=eu-west-3"]
+                			volumes = ["\$(pwd)/dist/dbl-angular-training:/dist/dbl-angular-training"]
+                			privateImage = false
+                			command = "s3 sync /dist/dbl-angular-training s3://angular-website-poc"
+                			foreground = true
+                		}
+                    
+                }
+            }
+        }
+        stage('provision env:prod') {
+            when {
+                expression {
+                    return  env.BRANCH_NAME == 'master'
+                }
+            }
+            steps {
+                script {
+                    build job: 'public/dbl-angular-provisioning-sample', parameters: [
+                    string(name: 'COMMAND', value: 'apply'),
+                    string(name: 'WORKSPACE', value: 'production'),
+                    ]
+                    
+                }
+            }
+        }
+        stage('Deploy:prod') {
+            when {
+                expression {
+                    return  env.BRANCH_NAME == 'master'
+                }
+            }
+            agent {
+                label 'fsfr001'
+            }
+            steps {
+                script {
+                    cleanWs()
+                    unstash 'builtSources'
+                    unstash 'Dockerfile'
+                    unstash 'nginxConf'
+                    String awskey = env.AWS_ACCESS_KEY_ID;
+                    String awssecretkey = env.AWS_SECRET_ACCESS_KEY_ID;
+                        dockerCmd.run {
+                			name = "awscli-s3"
+                			imageName = "amazon/aws-cli"
+                			envVars =  ["AWS_ACCESS_KEY_ID=${awskey}", "AWS_SECRET_ACCESS_KEY=${awssecretkey}", "AWS_DEFAULT_REGION=eu-west-3"]
+                			volumes = ["\$(pwd)/dist/dbl-angular-training:/dist/dbl-angular-training"]
+                			privateImage = false
+                			command = "s3 sync /dist/dbl-angular-training s3://angular-website-poc-prod"
+                			foreground = true
+                		}
+                }
+            }
+        }
+    }
+    post {
+        failure {
+            echo "$currentBuild.rawBuild.log"
+        }
+    }
+}

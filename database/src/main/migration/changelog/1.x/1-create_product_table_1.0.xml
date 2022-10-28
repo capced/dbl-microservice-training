@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+	<changeSet  id="01-create-product-table"  author="gwendal">
+        <preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="PRODUCTS"/>
+			</not>
+		</preConditions>
+        <comment>create table products if not exists</comment>
+       <createTable tableName="PRODUCTS" >
+			<column name="ID" type="bigint" autoIncrement="true" remarks="primary key">
+				<constraints nullable="false" primaryKey="true" unique="true"/>
+			</column>
+			<column name="VERSION" type="bigint" remarks="Product versioning" defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="PRODUCT_CODE" type="varchar(50)">
+				<constraints nullable="false" unique="true"  />
+			</column>
+			<column name="PRODUCT_NAME" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="PRODUCT_IS_IMPORTED" type="boolean" defaultValue="false" />
+			<column name="PRODUCT_RAW_PRICE" type="currency" defaultValue="0.0">
+				<constraints nullable="false" />
+			</column>
+			<column name="PRODUCT_TYPE" type="varchar(5)" />
+		</createTable>
+    </changeSet>
+</databaseChangeLog>
+

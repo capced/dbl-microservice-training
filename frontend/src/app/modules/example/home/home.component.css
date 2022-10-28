@@ -1,0 +1,36 @@
+.main-text {
+  text-align: center;
+}
+
+.logo {
+  width: 250px;
+}
+
+h1 {
+  font-weight: 200;
+  font-size: 2em;
+  margin-bottom: 0px;
+  color: var(--dark-blue);
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 2em;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color: var(--dark-blue);
+}
+
+p {
+  font-weight: 200;
+  font-size: 1.1em;
+  margin-top: 5px;
+  color: var(--grey-blue);
+}
+
+.big-button {
+  margin-top: 100px;
+  font-size: 2em;
+  width: 25%;
+  height: 60px;
+}

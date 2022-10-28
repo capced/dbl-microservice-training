@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+  <span routerLink="/">DBL shop</span>
+  <span class="example-spacer"></span>
+  <button mat-button (click)="openShoppingCart()">
+    <mat-icon
+      aria-hidden="false"
+      aria-label="shopping_cart icon"
+      fontIcon="shopping_cart"
+      [matBadge]="nbArticles"
+      matBadgePosition="after"
+      matBadgeColor="accent"
+      [matBadgeHidden]="nbArticles === 0"
+    >
+    </mat-icon>
+    Shopping cart
+  </button>
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon aria-hidden="false" aria-label="menu icon" fontIcon="menu"></mat-icon>
+    Menu
+  </button>
+  <mat-menu #menu="matMenu">
+    <button routerLink="/products" mat-menu-item>All Products</button>
+  </mat-menu>
+</mat-toolbar>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

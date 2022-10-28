@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+	<changeSet id="01-create-shoppingcart-table" author="gwendal">
+    <loadData
+            commentLineStartsWith="/"
+            encoding="UTF-8"
+            file="/data/products.csv"
+            quotchar="&quot;"
+
+            schemaName="public"
+            separator=","
+            tableName="PRODUCTS"
+            usePreparedStatements="true">
+			<column name="PRODUCT_CODE" header="code" type="varchar(50)" />
+			<column name="PRODUCT_NAME" header="name" type="varchar(50)" />
+			<column name="PRODUCT_IS_IMPORTED" header="isImported" type="boolean" />
+			<column name="PRODUCT_RAW_PRICE" header="rawPrice" type="currency" />
+			<column name="PRODUCT_TYPE" header="type" type="varchar(5)" />
+    </loadData>
+</changeSet>
+</databaseChangeLog>

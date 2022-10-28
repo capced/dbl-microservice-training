@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Your cart</h1>
+<div mat-dialog-content>
+  <ul class="shopping-cart-items">
+    <li *ngFor="let product of productsInCart" class="clearfix">
+      <div
+        class="product-img"
+        [ngClass]="{
+          'example-book': product.type === 'LIVRE',
+          'example-other': product.type === 'AUTRE',
+          'example-pn': product.type === 'PREMIERE_NECESSITE'
+        }"
+      ></div>
+      <span class="item-name">{{ product.name }}</span>
+      <span class="item-price">{{ product.withoutTaxesPrice * product.quantity | currency: 'EUR' }}</span>
+      <span class="item-quantity">Quantity: {{ product.quantity }}</span>
+      <span class="quantity-buttons">
+        <button mat-icon-button aria-label="remove one" (click)="removeOneProduct(product)">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="add one" (click)="increaseProduct(product)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </span>
+    </li>
+  </ul>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button mat-dialog-close>Close</button>
+  <button mat-raised-button color="primary" (click)="continueToShipping()" cdkFocusInitial>Continue to shipping</button>
+</div>

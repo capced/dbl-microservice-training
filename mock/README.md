@@ -1,0 +1,53 @@
+MockServer Java Client
+------------------------
+
+1. Launch MockServer instance with Maven
+mvn -Dmockserver.serverPort=1080 -Dmockserver.logLevel=INFO org.mock-server:mockserver-maven-plugin:5.13.2:runForked
+
+Other execution target :
+https://www.mock-server.com/mock_server/running_mock_server.html
+
+2. Hydrate mockserver with JSON Expectations
+
+Don't forget to configure mockserver Host, Port and context in maven properties
+
+[source,xml]
+-----------------
+<plugin>
+	<groupId>org.codehaus.mojo</groupId>
+	<artifactId>exec-maven-plugin</artifactId>
+	<version>3.0.0</version>
+	<executions>
+		<execution>
+			<goals>
+				<goal>java</goal>
+			</goals>
+		</execution>
+	</executions>
+	<configuration>
+        <includeProjectDependencies>false</includeProjectDependencies>
+        <includePluginDependencies>true</includePluginDependencies>
+        <executableDependency>
+            <groupId>fr.caa.omnicanal.w4</groupId>
+            <artifactId>w4-mogp-mock</artifactId>
+        </executableDependency>
+        <mainClass>fr.caa.common.test.mock.MockServerInitializer</mainClass>
+		<arguments>
+			<argument>${mockserver.host}</argument>
+			<argument>${mockserver.port}</argument>
+			<argument>${mockserver.context}</argument>
+		</arguments>
+	</configuration>
+    <dependencies>
+        <dependency>
+            <groupId>fr.caa.omnicanal.w4</groupId>
+            <artifactId>w4-mogp-mock</artifactId>
+            <version>1.0.0</version>
+            <type>zip</type>
+        </dependency>
+    </dependencies>
+</plugin>
+
+Get Dashboard
+-------------
+http://localhost:1080/mockserver/dashboard

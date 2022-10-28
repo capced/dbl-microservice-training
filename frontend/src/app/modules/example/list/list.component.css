@@ -1,0 +1,19 @@
+.tile {
+  overflow: visible;
+}
+
+.filter-input-4 {
+  width: 25%;
+}
+
+.filter-input-3 {
+  width: 50%;
+}
+
+.filter-input-2 {
+  width: 75%;
+}
+
+.filter-input-1 {
+  width: 100%;
+}

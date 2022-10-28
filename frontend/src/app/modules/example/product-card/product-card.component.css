@@ -1,0 +1,26 @@
+:host {
+  width: 100%;
+  overflow: visible;
+}
+.example-header-image-book {
+  background-image: url('https://static.vecteezy.com/system/resources/previews/000/268/026/non_2x/vector-stack-of-books-and-pics-albums.jpg');
+  background-size: cover;
+}
+
+.example-header-image-other {
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTAjsy1A3B9-dVhroHHe-HGu0DdpjUki4CMRg&usqp=CAU');
+  background-size: cover;
+}
+
+.example-header-image-pn {
+  background-image: url('https://m.bettybossi.ch/static/rezepte/x/bb_bbza040115_0008c_x.jpg');
+  background-size: cover;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
+.button-icon-spacer {
+  padding-left: 10px;
+}

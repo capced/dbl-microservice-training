@@ -1,0 +1,183 @@
+{
+  "_embedded": {
+    "products": [
+      {
+        "id": 1,
+        "code": "LIVRE-ASSOMMOIR",
+        "name": "L'assommoir (Zola)",
+        "imported": false,
+        "rawPrice": 12,
+        "type": "Livre",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8090/shoppingcart/products/1"
+          },
+          "product": {
+            "href": "http://localhost:8090/shoppingcart/products/1"
+          }
+        }
+      },
+      {
+        "id": 2,
+        "code": "LIVRE-DERNIER-LAPON",
+        "name": "Le dernier lapon (O. Truc)",
+        "imported": false,
+        "rawPrice": 12,
+        "type": "Livre",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8090/shoppingcart/products/2"
+          },
+          "product": {
+            "href": "http://localhost:8090/shoppingcart/products/2"
+          }
+        }
+      },
+      {
+        "id": 3,
+        "code": "CDMUS-QUEEN",
+        "name": "Queen Live at Wembley",
+        "imported": false,
+        "rawPrice": 15,
+        "type": "Autre",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8090/shoppingcart/products/3"
+          },
+          "product": {
+            "href": "http://localhost:8090/shoppingcart/products/3"
+          }
+        }
+      },
+      {
+        "id": 4,
+        "code": "BOCHO1-JDB-IMP",
+        "name": "boites de chocolat Jeff De Bruges",
+        "imported": true,
+        "rawPrice": 10,
+        "type": "Premiere necessite",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8090/shoppingcart/products/4"
+          },
+          "product": {
+            "href": "http://localhost:8090/shoppingcart/products/4"
+          }
+        }
+      },
+      {
+        "id": 5,
+        "code": "BOCHO2-MILKA-IMP",
+        "name": "boites de chocolat Milka",
+        "imported": true,
+        "rawPrice": 11,
+        "type": "Premiere necessite",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8090/shoppingcart/products/5"
+          },
+          "product": {
+            "href": "http://localhost:8090/shoppingcart/products/5"
+          }
+        }
+      },
+      {
+        "id": 6,
+        "code": "BACHO-MARS",
+        "name": "barres de chocolat Mars",
+        "imported": false,
+        "rawPrice": 1,
+        "type": "Premiere necessite",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8090/shoppingcart/products/6"
+          },
+          "product": {
+            "href": "http://localhost:8090/shoppingcart/products/6"
+          }
+        }
+      },
+      {
+        "id": 7,
+        "code": "PARFU1-DIOR-IMP",
+        "name": "Parfum Dior",
+        "imported": true,
+        "rawPrice": 48,
+        "type": "Autre",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8090/shoppingcart/products/7"
+          },
+          "product": {
+            "href": "http://localhost:8090/shoppingcart/products/7"
+          }
+        }
+      },
+      {
+        "id": 8,
+        "code": "PARFU2-CHANNEL-IMP",
+        "name": "Parfum Channel",
+        "imported": true,
+        "rawPrice": 28,
+        "type": "Autre",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8090/shoppingcart/products/8"
+          },
+          "product": {
+            "href": "http://localhost:8090/shoppingcart/products/8"
+          }
+        }
+      },
+      {
+        "id": 9,
+        "code": "PARFU3-CKLEIN",
+        "name": "Parfum Calvin Klein",
+        "imported": false,
+        "rawPrice": 19,
+        "type": "Autre",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8090/shoppingcart/products/9"
+          },
+          "product": {
+            "href": "http://localhost:8090/shoppingcart/products/9"
+          }
+        }
+      },
+      {
+        "id": 10,
+        "code": "BOPIL1-DOLI",
+        "name": "Boites de pilules contre la migraine",
+        "imported": false,
+        "rawPrice": 10,
+        "type": "Premiere necessite",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8090/shoppingcart/products/10"
+          },
+          "product": {
+            "href": "http://localhost:8090/shoppingcart/products/10"
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost:8090/shoppingcart/products"
+    },
+    "profile": {
+      "href": "http://localhost:8090/shoppingcart/profile/products"
+    },
+    "search": {
+      "href": "http://localhost:8090/shoppingcart/products/search"
+    }
+  },
+  "page": {
+    "size": 20,
+    "totalElements": 10,
+    "totalPages": 1,
+    "number": 0
+  }
+}
